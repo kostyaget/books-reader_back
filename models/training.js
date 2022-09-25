@@ -9,5 +9,5 @@ trainingSchema.post('save', handleSchemaValidationErrors)
 const Training = model('book', trainingSchema)
 
 module.exports = {
-  Book: Training,
+  Training,
 }
