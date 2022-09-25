@@ -1,12 +1,7 @@
 const { Schema, model } = require('mongoose')
 const bcrypt = require('bcrypt')
 
-const { handleSchemaValidationErrors } = require('../helpers')
-
-const patterns = {
-  // eslint-disable-next-line no-useless-escape
-  email: /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/,
-}
+const { handleSchemaValidationErrors, patterns } = require('../helpers')
 
 const userSchema = new Schema(
   {
