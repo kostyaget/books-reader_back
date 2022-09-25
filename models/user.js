@@ -43,8 +43,8 @@ const userSchema = new Schema(
         },
         pagesAmount: {
           type: Number,
-          min: 1,
-          max: 1000,
+          min: [1, 'Minimum amount of pages must be 1'],
+          max: [1000, 'Minimum amount of pages must be 1000'],
           required: [true, 'Pages amount is required'],
         },
       },
