@@ -4,12 +4,9 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: ['eslint:recommended', 'plugin:react/recommended'],
-  overrides: [],
+  extends: ['standard', 'prettier'],
   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
+    ecmaVersion: 12,
   },
-  plugins: ['react'],
   rules: {},
 }
