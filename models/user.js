@@ -9,22 +9,26 @@ const userSchema = new Schema(
       type: String,
       minLength: [3, 'Must be at least 3, got {VALUE}'],
       maxLength: [30, 'Must be maximum 30 symbols. You got {VALUE}'],
+      trim: true,
       required: [true, 'Username is required'],
     },
     email: {
       type: String,
       required: [true, 'Email is required'],
       match: patterns.email,
+      trim: true,
       unique: true,
     },
     passwordHash: {
       type: String,
       minLength: [6, 'Must be at least 6, got {VALUE}'],
       maxLength: [40, 'Must be maximum 40 symbols. You got {VALUE}'],
+      trim: true,
       required: [true, 'Password is required'],
     },
     avatarUrl: {
       type: String,
+      trim: true,
       default: '',
     },
     firstVisit: {
