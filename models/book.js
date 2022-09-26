@@ -18,10 +18,10 @@ const bookSchema = new Schema(
       trim: true,
       required: [true, 'Author is required'],
     },
-    publishingDate: {
+    /*  publishingDate: {
       type: Date,
       required: [true, 'Publishig date is required'],
-    },
+    }, */
     pageAmount: {
       type: Number,
       min: [1, 'Minimum amount of pages must be 1'],
@@ -50,11 +50,11 @@ const bookSchema = new Schema(
       maxLenght: [1000, 'Must be maximum 1000 symbols. You got {VALUE}'],
       trim: true,
     },
-    reader: {
+    /*  reader: {
       type: Schema.Types.ObjectId,
       ref: 'user',
       required: [true, 'Reader person is required'],
-    },
+    }, */
   },
   { versionKey: false, timestamps: true }
 )
