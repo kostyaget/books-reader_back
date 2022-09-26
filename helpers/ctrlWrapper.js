@@ -1,3 +1,4 @@
+
 const ctrlWrapper = ctrl => {
     const func = async (req, res, next) => {
         try {
@@ -11,3 +12,4 @@ const ctrlWrapper = ctrl => {
 }
  
 module.exports = ctrlWrapper;
+

@@ -25,7 +25,8 @@ const userSchema = new Schema(
       minLength: [6, 'Must be at least 6, got {VALUE}'],
       maxLength: [1000, 'Must be maximum 1000 symbols. You got {VALUE}'],
       trim: true,
-      required: [true, 'Password is required'],
+      // required: [true, 'Password is required'],
+      // если сделать пароль обезятельным - невозножно будет зайти через гугл
     },
     avatarUrl: {
       type: String,
