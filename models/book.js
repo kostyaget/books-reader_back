@@ -36,6 +36,7 @@ const bookSchema = new Schema(
         values: ['completed', 'in-progress', 'next'],
         message: '{VALUE} is not supported',
       },
+      default: 'next',
     },
     rating: {
       type: Number,
