@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose')
-const bcrypt = require('bcrypt')
+// const bcrypt = require('bcrypt')
+const Joi = require('joi'); 
 
 const { handleSchemaValidationErrors, patterns } = require('../helpers')
 
@@ -19,10 +20,10 @@ const userSchema = new Schema(
       trim: true,
       unique: true,
     },
-    passwordHash: {
+    password: {
       type: String,
       minLength: [6, 'Must be at least 6, got {VALUE}'],
-      maxLength: [40, 'Must be maximum 40 symbols. You got {VALUE}'],
+      maxLength: [1000, 'Must be maximum 1000 symbols. You got {VALUE}'],
       trim: true,
       // required: [true, 'Password is required'],
       // если сделать пароль обезятельным - невозножно будет зайти через гугл
@@ -60,12 +61,26 @@ const userSchema = new Schema(
 
 userSchema.post('save', handleSchemaValidationErrors)
 
-userSchema.methods.validatePassword = function (password) {
-  return bcrypt.compare(password, this.passwordHash)
+// userSchema.methods.validatePassword = function (password) {
+//   return bcrypt.compare(password, this.passwordHash)
+// }
+
+const registerSchema = Joi.object({
+  username: Joi.string().min(3).max(30).required(),
+  email: Joi.string().pattern(patterns.email).required(),
+  password: Joi.string().min(6).max(40).required(),
+  // confirmPasswordHash: Joi.string().required().valid(Joi.ref('passwordHash')),
+  repeat_password: Joi.string().required().valid(Joi.ref("password")),
+
+})
+
+const schemas = {
+  registerSchema,
 }
 
 const User = model('user', userSchema)
 
 module.exports = {
   User,
+  schemas
 }

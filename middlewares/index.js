@@ -1,5 +1,7 @@
-const validationBody = require('./validationBody')
+
+const validateBody = require('./validateBody');
 
 module.exports = {
-  validationBody,
+    validateBody,
 }
+
