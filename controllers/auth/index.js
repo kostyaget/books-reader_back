@@ -1,4 +1,9 @@
-const logout = require('./logout')
-const { googleAuth, googleRedirect } = require('./googleLogin')
 
-module.exports = { logout, googleAuth, googleRedirect }
+const register = require('./register');
+const login = require('./login');
+
+module.exports = {
+    register,
+    login,
+}
+

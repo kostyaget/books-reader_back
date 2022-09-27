@@ -18,10 +18,10 @@ const bookSchema = new Schema(
       trim: true,
       required: [true, 'Author is required'],
     },
-    /*  publishingDate: {
+    publishingDate: {
       type: Date,
       required: [true, 'Publishig date is required'],
-    }, */
+    },
     pageAmount: {
       type: Number,
       min: [1, 'Minimum amount of pages must be 1'],
