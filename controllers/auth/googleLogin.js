@@ -2,16 +2,16 @@ const queryString = require("query-string");
 const axios = require("axios");
 const jwt = require("jsonwebtoken");
 
-const { isExistUser, createUser } = require("../../services/auth");
+const { isExistUser, createUser } = require("../../services");
 const {User} = require("../../models");
 const { updateToken } = require("../../services/updateToken");
 
-const TOKEN_SECRET_KEY = process.env.TOKEN_SECRET_KEY;
+const SECRET_KEY = process.env.SECRET_KEY;
 
 exports.googleAuth = async (req, res) => {
   const stringifiedParams = queryString.stringify({
     client_id: process.env.GOOGLE_CLIENT_ID,
-    redirect_uri: `${process.env.BACKEND_URL}/api/v1/auth/google-redirect`,
+    redirect_uri: `${process.env.BACKEND_URL}/api/auth/google-redirect`,
     scope: [
       "https://www.googleapis.com/auth/userinfo.email",
       "https://www.googleapis.com/auth/userinfo.profile",
@@ -38,7 +38,7 @@ exports.googleRedirect = async (req, res) => {
     data: {
       client_id: process.env.GOOGLE_CLIENT_ID,
       client_secret: process.env.GOOGLE_CLIENT_SECRET,
-      redirect_uri: `${process.env.BACKEND_URL}/api/v1/auth/google-redirect`,
+      redirect_uri: `${process.env.BACKEND_URL}/api/auth/google-redirect`,
       grant_type: "authorization_code",
       code,
     },
@@ -68,7 +68,7 @@ exports.googleRedirect = async (req, res) => {
     email: userEmail,
   });
 
-  const token = jwt.sign({ id: currentUser.id }, TOKEN_SECRET_KEY, {
+  const token = jwt.sign({ id: currentUser.id }, SECRET_KEY, {
     expiresIn: "8h",
   });
 
