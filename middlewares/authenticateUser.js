@@ -10,11 +10,11 @@ const authenticateUser = async (req, _, next) => {
   bearer !== 'Bearer' && next(RequestError(401))
 
   try {
-    jwt.verify(token, SECRET_KEY)
+    const { id: userId } = jwt.verify(token, SECRET_KEY)
 
-    const user = await User.findOne({ token })
+    const user = await User.findById(userId)
 
-    !user && next(RequestError(401))
+    !user?.token && next(RequestError(401))
 
     req.user = user
 
