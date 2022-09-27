@@ -4,4 +4,5 @@ module.exports = {
   validateBody,
   ...require('./authenticateUser'),
   ...require('./validateRequestId'),
+  ...require('./checkCorrectBookStatus'),
 }

@@ -52,11 +52,11 @@ const bookSchema = new Schema(
       trim: true,
       default: '',
     },
-    /*  reader: {
+    reader: {
       type: Schema.Types.ObjectId,
       ref: 'user',
       required: [true, 'Reader person is required'],
-    }, */
+    },
   },
   { versionKey: false, timestamps: true }
 )

@@ -5,6 +5,7 @@ const {
   validateBody,
   validateRequestId,
   authenticateUser,
+  checkCorrectBookStatus,
 } = require('../../middlewares')
 const { ctrlWrapper } = require('../../helpers')
 const { updateResumeSchema } = require('../../models')
@@ -16,6 +17,7 @@ router.patch(
   '/:id/resume',
   authenticateUser,
   validateRequestId,
+  checkCorrectBookStatus,
   validateBody(updateResumeSchema),
   ctrlWrapper(updateResume)
 )
