@@ -44,14 +44,13 @@ const bookSchema = new Schema(
       min: [0, 'Minimum amount of pages must be 0'],
       max: [5, 'Minimum amount of pages must be 5'],
       default: 0,
-      required: [true, 'Rating value is required'],
     },
     summary: {
       type: String,
       minLenght: [1, 'Must be minimum 1 symbols. You got {VALUE}'],
       maxLenght: [1000, 'Must be maximum 1000 symbols. You got {VALUE}'],
       trim: true,
-      required: [true, 'Summary is required'],
+      default: '',
     },
     /*  reader: {
       type: Schema.Types.ObjectId,
@@ -68,8 +67,8 @@ const Book = model('book', bookSchema)
 
 const updateResumeSchema = Joi.object({
   rating: Joi.number().integer().min(0).max(5),
-  summary: Joi.string().min(1).max(100),
-}).with('rating', 'summary')
+  summary: Joi.string().trim().min(1, 'utf-8').max(1000, 'utf-8'),
+}).or('rating', 'summary')
 
 module.exports = {
   Book,
