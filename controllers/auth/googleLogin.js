@@ -3,7 +3,7 @@ const axios = require("axios");
 const jwt = require("jsonwebtoken");
 
 const { isExistUser, createUser } = require("../../services/auth");
-const User = require("../../models/User");
+const {User} = require("../../models");
 const { updateToken } = require("../../services/updateToken");
 
 const TOKEN_SECRET_KEY = process.env.TOKEN_SECRET_KEY;
@@ -72,7 +72,7 @@ exports.googleRedirect = async (req, res) => {
     expiresIn: "8h",
   });
 
-  if (currentUser.token != token) {
+  if (currentUser.token !== token) {
     await updateToken({ _id: currentUser.id }, { token });
   }
 
