@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose')
+const Joi = require('joi')
 
 const { handleSchemaValidationErrors } = require('../helpers')
 
@@ -50,19 +51,31 @@ const bookSchema = new Schema(
       maxLenght: [1000, 'Must be maximum 1000 symbols. You got {VALUE}'],
       trim: true,
     },
-    /*  reader: {
+    reader: {
       type: Schema.Types.ObjectId,
       ref: 'user',
       required: [true, 'Reader person is required'],
-    }, */
+    },
   },
   { versionKey: false, timestamps: true }
 )
 
 bookSchema.post('save', handleSchemaValidationErrors)
 
+const addBooksSkhema = Joi.object({
+  title: Joi.string().required(),
+  author: Joi.string().required(),
+  publishingDate: Joi.string().required(),
+  pageAmount: Joi.number().required(),
+})
+
+const schemas = {
+  addBooksSkhema,
+}
+
 const Book = model('book', bookSchema)
 
 module.exports = {
   Book,
+  schemas,
 }
