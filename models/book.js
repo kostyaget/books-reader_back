@@ -63,6 +63,17 @@ const bookSchema = new Schema(
 
 bookSchema.post('save', handleSchemaValidationErrors)
 
+const addBooksSkhema = Joi.object({
+  title: Joi.string().required(),
+  author: Joi.string().required(),
+  publishingDate: Joi.string().required(),
+  pageAmount: Joi.number().required(),
+})
+
+const schemas = {
+  addBooksSkhema,
+}
+
 const Book = model('book', bookSchema)
 
 const updateResumeSchema = Joi.object({
@@ -73,4 +84,5 @@ const updateResumeSchema = Joi.object({
 module.exports = {
   Book,
   updateResumeSchema,
+  schemas,
 }

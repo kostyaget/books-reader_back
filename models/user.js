@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose')
 // const bcrypt = require('bcrypt')
-const Joi = require('joi'); 
+const Joi = require('joi')
 
 const { handleSchemaValidationErrors, patterns } = require('../helpers')
 
@@ -55,28 +55,32 @@ const userSchema = new Schema(
       type: String,
       default: null,
     },
+    isVerify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      //   required: [true, "verificationToken is required"],
+      //  default: randomUUID(),
+    },
   },
   { versionKey: false, timestamps: true }
 )
 
 userSchema.post('save', handleSchemaValidationErrors)
 
-// userSchema.methods.validatePassword = function (password) {
-//   return bcrypt.compare(password, this.passwordHash)
-// }
-
 const registerSchema = Joi.object({
   username: Joi.string().min(3).max(30).required(),
   email: Joi.string().pattern(patterns.email).required(),
   password: Joi.string().min(6).max(40).required(),
   // confirmPasswordHash: Joi.string().required().valid(Joi.ref('passwordHash')),
-  repeat_password: Joi.string().required().valid(Joi.ref("password")),
+  repeat_password: Joi.string().required().valid(Joi.ref('password')),
 })
 
 const loginSchema = Joi.object({
   email: Joi.string().pattern(patterns.email).required(),
   password: Joi.string().min(6).max(40).required(),
-
 })
 
 const schemas = {
@@ -88,5 +92,5 @@ const User = model('user', userSchema)
 
 module.exports = {
   User,
-  schemas
+  schemas,
 }

@@ -1,3 +1,4 @@
+const auth = require('./auth')
 const validateBody = require('./validateBody')
 
 module.exports = {
@@ -5,4 +6,5 @@ module.exports = {
   ...require('./authenticateUser'),
   ...require('./validateRequestId'),
   ...require('./checkCorrectBookStatus'),
+  auth,
 }
