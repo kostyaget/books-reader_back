@@ -50,6 +50,7 @@ const bookSchema = new Schema(
       minLenght: [1, 'Must be minimum 1 symbols. You got {VALUE}'],
       maxLenght: [1000, 'Must be maximum 1000 symbols. You got {VALUE}'],
       trim: true,
+      default: '',
     },
     reader: {
       type: Schema.Types.ObjectId,
@@ -75,7 +76,13 @@ const schemas = {
 
 const Book = model('book', bookSchema)
 
+const updateResumeSchema = Joi.object({
+  rating: Joi.number().integer().min(0).max(5),
+  summary: Joi.string().trim().min(1, 'utf-8').max(1000, 'utf-8'),
+}).or('rating', 'summary')
+
 module.exports = {
   Book,
+  updateResumeSchema,
   schemas,
 }

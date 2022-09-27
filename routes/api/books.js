@@ -1,9 +1,16 @@
 const express = require('express')
 const controller = require('../../controllers/books')
-const { validateBody, auth } = require('../../middlewares')
-const { schemas } = require('../../models')
-
+const { updateResume } = require('../../controllers/books')
+const {
+  auth,
+  authenticateUser,
+  validateBody,
+  validateRequestId,
+  checkCorrectBookStatus,
+} = require('../../middlewares')
+const { schemas, updateResumeSchema } = require('../../models')
 const { ctrlWrapper } = require('../../helpers')
+
 const router = express.Router()
 
 router.post(
@@ -11,6 +18,15 @@ router.post(
   auth,
   validateBody(schemas.addBooksSkhema),
   ctrlWrapper(controller.add)
+)
+
+router.patch(
+  '/:id/resume',
+  authenticateUser,
+  validateRequestId,
+  checkCorrectBookStatus,
+  validateBody(updateResumeSchema),
+  ctrlWrapper(updateResume)
 )
 
 module.exports = router

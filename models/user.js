@@ -61,18 +61,14 @@ const userSchema = new Schema(
     },
     verificationToken: {
       type: String,
-   //   required: [true, "verificationToken is required"],
-    //  default: randomUUID(),
+      //   required: [true, "verificationToken is required"],
+      //  default: randomUUID(),
     },
   },
   { versionKey: false, timestamps: true }
 )
 
 userSchema.post('save', handleSchemaValidationErrors)
-
-// userSchema.methods.validatePassword = function (password) {
-//   return bcrypt.compare(password, this.passwordHash)
-// }
 
 const registerSchema = Joi.object({
   username: Joi.string().min(3).max(30).required(),
