@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose')
 const bcrypt = require('bcrypt')
+const { randomUUID } = require("crypto");
 
 const { handleSchemaValidationErrors, patterns } = require('../helpers')
 
@@ -53,6 +54,10 @@ const userSchema = new Schema(
     token: {
       type: String,
       default: null,
+    },
+    isVerify: {
+      type: Boolean,
+      default: false,
     },
     verificationToken: {
       type: String,

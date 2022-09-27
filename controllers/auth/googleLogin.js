@@ -51,16 +51,13 @@ exports.googleRedirect = async (req, res) => {
       Authorization: `Bearer ${tokenData.data.access_token}`,
     },
   })
-  const { email, name } = userData.data
-  const user = await User.findOne({ email })
- 
+  
   const userEmail = userData.data.email
 
   const existUser = await isExistUser(userEmail)
 
 
   if (!existUser) {
-    console.log(userEmail)
     await createUser({
       email: userEmail,
       isVerify: true,
@@ -68,17 +65,17 @@ exports.googleRedirect = async (req, res) => {
     })
   }
 
-  // const currentUser = await User.findOne({
-  //   email: userEmail,
-  // })
+  const currentUser = await User.findOne({
+    email: userEmail,
+  })
 
-  // const token = jwt.sign({ id: currentUser.id }, SECRET_KEY, {
-  //   expiresIn: '8h',
-  // })
+  const token = jwt.sign({ id: currentUser.id }, SECRET_KEY, {
+    expiresIn: '8h',
+  })
 
-  // if (currentUser.token !== token) {
-  //   await updateToken({ _id: currentUser.id }, { token })
-  // }
+  if (currentUser.token !== token) {
+    await updateToken({ _id: currentUser.id }, { token })
+  }
 
-  // return res.redirect(`${process.env.FRONTEND_URL}/googleAuth?token=${token}`)
+  return res.redirect(`${process.env.FRONTEND_URL}/googleAuth?token=${token}`)
 }
