@@ -11,7 +11,9 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.1",
     "morgan": "^1.10.0",
-    "passport-jwt": "^4.0.0"
+    "passport-jwt": "^4.0.0",
+    "query-string": "^7.1.1",
+    "randomuuid": "^1.0.1"
   },
   "name": "books-reader_back",
   "version": "1.0.0",
