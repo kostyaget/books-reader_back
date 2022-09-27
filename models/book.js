@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose')
+const Joi = require('joi')
 
 const { handleSchemaValidationErrors } = require('../helpers')
 
@@ -63,6 +64,12 @@ bookSchema.post('save', handleSchemaValidationErrors)
 
 const Book = model('book', bookSchema)
 
+const updateResumeSchema = Joi.object({
+  rating: Joi.number().integer().min(0).max(5),
+  summary: Joi.string().min(1).max(100),
+})
+
 module.exports = {
   Book,
+  updateResumeSchema,
 }
