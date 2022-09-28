@@ -14,7 +14,8 @@
     "morgan": "^1.10.0",
     "passport-jwt": "^4.0.0",
     "query-string": "^7.1.1",
-    "randomuuid": "^1.0.1"
+    "randomuuid": "^1.0.1",
+    "swagger-ui-express": "^4.5.0"
   },
   "name": "books-reader_back",
   "version": "1.0.0",
