@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose')
 // const bcrypt = require('bcrypt')
 const Joi = require('joi')
+const { randomUUID } = require("crypto");
 
 const { handleSchemaValidationErrors, patterns } = require('../helpers')
 
@@ -61,8 +62,8 @@ const userSchema = new Schema(
     },
     verificationToken: {
       type: String,
-      //   required: [true, "verificationToken is required"],
-      //  default: randomUUID(),
+        required: [true, "verificationToken is required"],
+       default: randomUUID(),
     },
   },
   { versionKey: false, timestamps: true }

@@ -4,7 +4,7 @@ const { RequestError } = require('../../helpers');
 const { User } = require('../../models/user');
 
 const register = async (req, res, next) => {
-    const { username,email, password } = req.body;
+    const { username, email, password } = req.body;
     const user = await User.findOne({ email });
     if (user) {
         throw RequestError(409, "Email already registered");

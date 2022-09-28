@@ -6,7 +6,7 @@ const SECRET_KEY = process.env.SECRET_KEY
 const createUser = async (body) => {
   const newUser = await User.create(body)
   
-  const { id, email, verificationToken } = newUser
+  const { id, email, userName, verificationToken } = newUser
 
   const token = jwt.sign({ id: newUser.id }, SECRET_KEY, {
     expiresIn: '20h',
@@ -14,7 +14,7 @@ const createUser = async (body) => {
   newUser.token = token
   await newUser.save()
 
-  return { id, email, token, verificationToken }
+  return { id, email, userName, token, verificationToken }
 }
 
 module.exports = createUser
