@@ -88,9 +88,15 @@ const schemas = {
   loginSchema,
 }
 
+const addResultSchema = Joi.object({
+  trainingDate: Joi.date().required(),
+  pagesAmount: Joi.number().integer().min(1).required(),
+})
+
 const User = model('user', userSchema)
 
 module.exports = {
   User,
   schemas,
+  addResultSchema,
 }
