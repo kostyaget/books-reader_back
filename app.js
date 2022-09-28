@@ -7,7 +7,6 @@ const booksRouter = require('./routes/api/books')
 const app = express()
 
 const authRouter = require('./routes/api/auth')
-// const authRouter = require('./routes/api/users')
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short'
 
