@@ -1,0 +1,227 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "version": "1.0.0",
+        "title": "Books-reader Api",
+        "description": "API for the Books-reader application, allows you to add books to your own library, displays statistics: time, amount of material read"
+    },
+    "consumes": [
+        "aplication/json",
+        "multipart/form-data"
+    ],
+    "produces": [
+        "aplication/json",
+        "multipart/form-data"
+    ],
+    "servers": [
+        {
+            "url": "http://localhost:3000/api-docs"
+        },
+        {
+            "url": "https://dashboard.heroku.com/apps/books-reader-project/activity"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Authorization endpoints"
+        },
+        {
+            "name": "Books",
+            "description": "Books endpoints"
+        },
+        {
+            "name": "Users",
+            "description": "Reader endpoints"
+        }
+    ],
+
+    "paths": {
+        "/api/auth/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "User registration",
+                "parameters": [],
+                
+                "requestBody": {
+                    "description": "Registrations object",
+                    "required": true,
+                    "content": {
+                        "aplication/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegistrationRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RegistrationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request (invalid request body)",
+                        "content": {}
+                    },
+                    "409": {
+                        "description": "Email already registered",
+                        "content": {}
+                    }
+                }
+            }
+        },
+         "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "User registration",
+                "parameters": [],
+                
+                "requestBody": {
+                    "description": "Registrations object",
+                    "required": true,
+                    "content": {
+                        "aplication/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Email not found , Password incorrect",
+                        "content": {}
+                    }  
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "RegistrationRequest": {
+                "type": "object",
+                "required": [
+                    "username",
+                    "email",
+                    "password",
+                    "repeat_password"
+                ],
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "description": "User`s name"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "User`s email",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "User`s password",
+                        "example": "qwert12345"
+                    },
+                    "repeat_password": {
+                        "type": "string",
+                        "description": "User`s password",
+                        "example": "qwert12345"
+                    }
+                }
+            },
+            "RegistrationResponse": {
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "type": "object",
+                        "properties": {
+                            "username": {
+                                "type": "string",
+                                "description": "User`s name"
+                            },
+                            "email": {
+                                "type": "string",
+                                "description": "User`s email",
+                                "format": "email"
+                            },
+                            "_id":{
+                                "type":"string",
+                                "description":"User`s id",
+                                "example":"4826873682742892"
+                            }
+                        }
+                    }
+                }
+            },
+             "LoginRequest": {
+                "type": "object",
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "User`s email",
+                        "format": "email"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "User`s password",
+                        "example": "qwert12345"
+                    }
+                }
+            },
+            "LoginResponse": {
+                "type": "object",
+                "properties": {
+                    "token":{
+                        "type":"string",
+                        "example":"dguwg54duyw.ccscgdsuchu22cxcs7dsjciodsjcdiosjcdicjdi._chcb32fdshbxs"
+                    },
+                    "user": {
+                        "type": "object",
+                        "properties": {
+                            "email": {
+                                "type": "string",
+                                "description": "User`s email",
+                                "format": "email"
+                            },
+                            "_id":{
+                                "type":"string",
+                                "description":"User`s id",
+                                "example":"4826873682742892"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "securitySchemes":{
+                "Bearer":{
+                    "type":"http",
+                    "scheme":"bearer",
+                    "bearerFormat":"JWT"
+                }
+            }
+    }
+}
