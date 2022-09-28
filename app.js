@@ -9,6 +9,8 @@ const app = express()
 const authRouter = require('./routes/api/auth')
 // const authRouter = require('./routes/api/users')
 
+const usersRouter = require('./routes/api/users')
+
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short'
 
 app.use(logger(formatsLogger))
@@ -19,6 +21,7 @@ app.use(express.static('public'))
 app.use('/api/books', booksRouter)
 
 app.use('/api/auth', authRouter)
+app.use('/api/users', usersRouter)
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Not found' })
