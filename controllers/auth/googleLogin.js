@@ -51,11 +51,13 @@ exports.googleRedirect = async (req, res) => {
     },
   })
 
+  console.log(userData)
+
   const userEmail = userData.data.email
   const userName = userData.data.name
 
-  const existUser = await User.findOne({ userEmail })
- 
+  const existUser = await User.findOne({ email: userEmail })
+
   if (!existUser) {
     await createUser({
       email: userEmail,
