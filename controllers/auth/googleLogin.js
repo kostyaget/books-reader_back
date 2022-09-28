@@ -2,9 +2,8 @@ const queryString = require('query-string')
 const axios = require('axios')
 const jwt = require('jsonwebtoken')
 
-const { isExistUser, createUser } = require('../../services')
+const { createUser } = require('../../services')
 const { User } = require('../../models')
-const { updateToken } = require('../../services/updateToken')
 
 const SECRET_KEY = process.env.SECRET_KEY
 
@@ -51,31 +50,32 @@ exports.googleRedirect = async (req, res) => {
       Authorization: `Bearer ${tokenData.data.access_token}`,
     },
   })
-  
+
   const userEmail = userData.data.email
+  const userName = userData.data.name
 
-  const existUser = await isExistUser(userEmail)
-
-
+  const existUser = await User.findOne({ userEmail })
+ 
   if (!existUser) {
     await createUser({
       email: userEmail,
+      username: userName,
       isVerify: true,
       verificationToken: 'null',
     })
   }
 
-  const currentUser = await User.findOne({
-    email: userEmail,
-  })
+  const currentUser = await User.findOne({ email: userEmail })
 
   const token = jwt.sign({ id: currentUser.id }, SECRET_KEY, {
     expiresIn: '8h',
   })
 
   if (currentUser.token !== token) {
-    await updateToken({ _id: currentUser.id }, { token })
+    await User.findOneAndUpdate({ _id: currentUser.id }, { token })
   }
 
-  return res.redirect(`${process.env.FRONTEND_URL}/googleAuth?token=${token}`)
+  return res.redirect(
+    `${process.env.FRONTEND_URL}/googleAuth?token=${token}&email=${userEmail}`
+  )
 }
