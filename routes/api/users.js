@@ -6,10 +6,12 @@ const {
   authenticateUser,
   validateRequestId,
 } = require('../../middlewares')
-const { addResults } = require('../../controllers/users')
+const { addResults, getCurrentUserInfo } = require('../../controllers/users')
 const { addResultSchema } = require('../../models')
 
 const router = express.Router()
+
+router.get('/current', authenticateUser, ctrlWrapper(getCurrentUserInfo))
 
 router.patch(
   '/:id/results',

@@ -51,6 +51,8 @@ exports.googleRedirect = async (req, res) => {
     },
   })
 
+  console.log(userData)
+
   const userEmail = userData.data.email
   const userName = userData.data.name
 
