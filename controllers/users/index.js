@@ -1,4 +1,4 @@
 module.exports = {
   ...require('./addResults'),
-  ...require('./getUserById'),
+  ...require('./getCurrentUserInfo'),
 }
