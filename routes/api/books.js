@@ -14,7 +14,7 @@ const { ctrlWrapper } = require('../../helpers')
 const router = express.Router()
 
 router.post(
-  '/',
+  '/add',
   auth,
   validateBody(schemas.addBooksSkhema),
   ctrlWrapper(controller.add)
