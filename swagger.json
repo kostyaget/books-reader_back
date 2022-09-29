@@ -15,7 +15,7 @@
     ],
     "servers": [
         {
-            "url": "http://localhost:3000/api-docs"
+            "url": "http://localhost:3000"
         },
         {
             "url": "https://dashboard.heroku.com/apps/books-reader-project/activity"
@@ -35,7 +35,6 @@
             "description": "Reader endpoints"
         }
     ],
-
     "paths": {
         "/api/auth/register": {
             "post": {
@@ -44,12 +43,11 @@
                 ],
                 "summary": "User registration",
                 "parameters": [],
-                
                 "requestBody": {
                     "description": "Registrations object",
                     "required": true,
                     "content": {
-                        "aplication/json": {
+                        "application/json": {
                             "schema": {
                                 "$ref": "#/components/schemas/RegistrationRequest"
                             }
@@ -60,7 +58,7 @@
                     "201": {
                         "description": "Successful operation",
                         "content": {
-                            "aplication/json": {
+                            "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/RegistrationResponse"
                                 }
@@ -78,19 +76,18 @@
                 }
             }
         },
-         "/api/auth/login": {
+        "/api/auth/login": {
             "post": {
                 "tags": [
                     "Auth"
                 ],
-                "summary": "User registration",
+                "summary": "User login",
                 "parameters": [],
-                
                 "requestBody": {
-                    "description": "Registrations object",
+                    "description": "Login object",
                     "required": true,
                     "content": {
-                        "aplication/json": {
+                        "application/json": {
                             "schema": {
                                 "$ref": "#/components/schemas/LoginRequest"
                             }
@@ -101,7 +98,7 @@
                     "201": {
                         "description": "Successful operation",
                         "content": {
-                            "aplication/json": {
+                            "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/LoginResponse"
                                 }
@@ -111,7 +108,37 @@
                     "401": {
                         "description": "Email not found , Password incorrect",
                         "content": {}
-                    }  
+                    }
+                }
+            }
+        },
+        "/api/auth/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "User logout",
+                "parameters": [],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No content (in case of successful logout)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LogoutResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized (invalid token)",
+                        "content": {}
+                    }
                 }
             }
         }
@@ -128,7 +155,6 @@
                 ],
                 "properties": {
                     "username": {
-                        "type": "string",
                         "description": "User`s name"
                     },
                     "email": {
@@ -163,16 +189,16 @@
                                 "description": "User`s email",
                                 "format": "email"
                             },
-                            "_id":{
-                                "type":"string",
-                                "description":"User`s id",
-                                "example":"4826873682742892"
+                            "_id": {
+                                "type": "string",
+                                "description": "User`s id",
+                                "example": "4826873682742892"
                             }
                         }
                     }
                 }
             },
-             "LoginRequest": {
+            "LoginRequest": {
                 "type": "object",
                 "required": [
                     "email",
@@ -194,9 +220,9 @@
             "LoginResponse": {
                 "type": "object",
                 "properties": {
-                    "token":{
-                        "type":"string",
-                        "example":"dguwg54duyw.ccscgdsuchu22cxcs7dsjciodsjcdiosjcdicjdi._chcb32fdshbxs"
+                    "token": {
+                        "type": "string",
+                        "example": "dguwg54duyw.ccscgdsuchu22cxcs7dsjciodsjcdiosjcdicjdi._chcb32fdshbxs"
                     },
                     "user": {
                         "type": "object",
@@ -206,22 +232,27 @@
                                 "description": "User`s email",
                                 "format": "email"
                             },
-                            "_id":{
-                                "type":"string",
-                                "description":"User`s id",
-                                "example":"4826873682742892"
+                            "_id": {
+                                "type": "string",
+                                "description": "User`s id",
+                                "example": "4826873682742892"
                             }
                         }
                     }
                 }
+            },
+            
+            "LogoutResponse": {
+                "type": "object",
+                "properties": {}
             }
         },
-        "securitySchemes":{
-                "Bearer":{
-                    "type":"http",
-                    "scheme":"bearer",
-                    "bearerFormat":"JWT"
-                }
+        "securitySchemes": {
+            "Bearer": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
             }
+        }
     }
 }
