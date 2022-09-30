@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose')
 const Joi = require('joi')
 
-const { handleSchemaValidationErrors } = require('../helpers')
+const { handleSchemaValidationErrors, bookStatus } = require('../helpers')
 
 const bookSchema = new Schema(
   {
@@ -34,7 +34,7 @@ const bookSchema = new Schema(
       lowercase: true,
       trim: true,
       enum: {
-        values: ['completed', 'in-progress', 'next'],
+        values: [bookStatus.COMPLETED, bookStatus.IN_PROGRESS, bookStatus.NEXT],
         message: '{VALUE} is not supported',
       },
       default: 'next',
@@ -82,7 +82,10 @@ const updateResumeSchema = Joi.object({
 }).or('rating', 'summary')
 
 const updateStatusSchema = Joi.object({
-  status: Joi.string(),
+  status: Joi.string()
+    .valid(bookStatus.COMPLETED, bookStatus.IN_PROGRESS, bookStatus.NEXT)
+    .trim()
+    .required(),
 })
 
 module.exports = {

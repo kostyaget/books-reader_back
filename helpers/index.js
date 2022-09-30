@@ -9,4 +9,5 @@ module.exports = {
   patterns,
   RequestError,
   ctrlWrapper,
+  ...require('./const'),
 }
