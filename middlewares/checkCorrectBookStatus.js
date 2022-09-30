@@ -13,12 +13,12 @@ const checkCorrectBookStatus = async (req, _, next) => {
   }
 
   if (book.reader.toString() !== _id.toString()) {
-    next(RequestError(404, 'Book does not belong to you'))
+    next(RequestError(404, 'Book not found'))
     return
   }
 
   if (book.status !== bookStatus.COMPLETED) {
-    next(RequestError(400, 'Status must be "completed"'))
+    next(RequestError(400, 'Book status must be [completed]'))
     return
   }
 
