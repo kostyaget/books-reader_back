@@ -1,6 +1,6 @@
 const express = require('express')
 const controller = require('../../controllers/books')
-const { updateResume } = require('../../controllers/books')
+const { updateResume, updateStatus } = require('../../controllers/books')
 const {
   auth,
   authenticateUser,
@@ -8,7 +8,11 @@ const {
   validateRequestId,
   checkCorrectBookStatus,
 } = require('../../middlewares')
-const { schemas, updateResumeSchema } = require('../../models')
+const {
+  schemas,
+  updateResumeSchema,
+  updateStatusSchema,
+} = require('../../models')
 const { ctrlWrapper } = require('../../helpers')
 
 const router = express.Router()
@@ -33,8 +37,8 @@ router.patch(
   '/:id/status',
   authenticateUser,
   validateRequestId,
-  validateBody(),
-  ctrlWrapper()
+  validateBody(updateStatusSchema),
+  ctrlWrapper(updateStatus)
 )
 
 module.exports = router
