@@ -3,17 +3,20 @@ const { ctrlWrapper } = require('../../helpers')
 const {
   getActiveTrainings,
   updateTrainigStatus,
+  startTraining,
 } = require('../../controllers/trainings')
 const {
   authenticateUser,
   validateRequestId,
   validateBody,
 } = require('../../middlewares')
-const { updateTrainingStatusSchema } = require('../../models')
+const { updateTrainingStatusSchema,startTrainingSchema } = require('../../models')
 
 const router = express.Router()
 
 router.get('/', authenticateUser, ctrlWrapper(getActiveTrainings))
+
+router.post('/', authenticateUser, validateBody(startTrainingSchema),ctrlWrapper(startTraining));
 
 router.patch(
   '/:id/status',
