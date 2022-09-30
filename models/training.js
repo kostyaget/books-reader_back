@@ -1,6 +1,9 @@
+const Joi = require('joi')
 const { Schema, model } = require('mongoose')
 
-const { handleSchemaValidationErrors } = require('../helpers')
+const { handleSchemaValidationErrors, trainingStatus } = require('../helpers')
+
+const { ACTIVE, FINISHED } = trainingStatus
 
 const trainingSchema = new Schema(
   {
@@ -18,12 +21,22 @@ const trainingSchema = new Schema(
       max: [1000, 'Minimum amount of pages must be 1000'],
       required: [true, 'Pages amount is required'],
     },
+    status: {
+      type: String,
+      lowercase: true,
+      trim: true,
+      enum: {
+        values: [ACTIVE, FINISHED],
+        message: '{VALUE} is not supported',
+      },
+      default: ACTIVE,
+    },
     book: {
       type: Schema.Types.ObjectId,
       ref: 'book',
       required: [true, 'Book id is required'],
     },
-    reader: {
+    participator: {
       type: Schema.Types.ObjectId,
       ref: 'user',
       required: [true, 'Reader person is required'],
@@ -34,8 +47,13 @@ const trainingSchema = new Schema(
 
 trainingSchema.post('save', handleSchemaValidationErrors)
 
+const updateTrainingStatusSchema = Joi.object({
+  status: Joi.string().trim().valid(ACTIVE, FINISHED).required(),
+})
+
 const Training = model('training', trainingSchema)
 
 module.exports = {
   Training,
+  updateTrainingStatusSchema,
 }
