@@ -19,7 +19,7 @@ const trainingSchema = new Schema(
       type: Number,
       min: [1, 'Minimum amount of pages must be 1'],
       max: [1000, 'Minimum amount of pages must be 1000'],
-      required: [true, 'Pages amount is required'],
+      // required: [true, 'Pages amount is required'],
     },
     status: {
       type: String,
@@ -51,9 +51,16 @@ const updateTrainingStatusSchema = Joi.object({
   status: Joi.string().trim().valid(ACTIVE, FINISHED).required(),
 })
 
+const startTrainingSchema = Joi.object({
+    startDate: Joi.string().required(),
+    finishDate: Joi.string().required(),
+    book: Joi.array().required(),
+});
+
 const Training = model('training', trainingSchema)
 
 module.exports = {
   Training,
   updateTrainingStatusSchema,
+  startTrainingSchema,
 }
