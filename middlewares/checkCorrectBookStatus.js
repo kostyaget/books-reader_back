@@ -18,7 +18,7 @@ const checkCorrectBookStatus = async (req, _, next) => {
   }
 
   if (book.status !== bookStatus.COMPLETED) {
-    next(RequestError(400, 'Status must be "completed"'))
+    next(RequestError(400, 'Book status must be [completed]'))
     return
   }
 
