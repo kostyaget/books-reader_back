@@ -4,7 +4,7 @@ const { User } = require('../../models')
 const addResults = async (req, res) => {
   const { id: userId } = req.params
   const { progress, _id: authenticatedUserId } = req.user
-  console.log(req.user)
+
   if (userId !== authenticatedUserId.toString()) throw RequestError(403)
 
   progress.push(req.body)

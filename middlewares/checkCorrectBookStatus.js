@@ -1,7 +1,5 @@
-const { RequestError } = require('../helpers')
+const { RequestError, bookStatus } = require('../helpers')
 const { Book } = require('../models')
-
-const STATUS_COMPLETED = 'completed'
 
 const checkCorrectBookStatus = async (req, _, next) => {
   const { id } = req.params
@@ -19,7 +17,7 @@ const checkCorrectBookStatus = async (req, _, next) => {
     return
   }
 
-  if (book.status !== STATUS_COMPLETED) {
+  if (book.status !== bookStatus.COMPLETED) {
     next(RequestError(400, 'Status must be "completed"'))
     return
   }
