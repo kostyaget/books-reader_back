@@ -84,7 +84,7 @@ const updateResumeSchema = Joi.object({
 }).or('rating', 'summary')
 
 const updateStatusSchema = Joi.object({
-  status: Joi.string().valid(COMPLETED, IN_PROGRESS, NEXT).trim().required(),
+  status: Joi.string().trim().valid(COMPLETED, IN_PROGRESS, NEXT).required(),
 })
 
 module.exports = {

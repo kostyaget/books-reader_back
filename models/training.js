@@ -1,3 +1,4 @@
+const Joi = require('joi')
 const { Schema, model } = require('mongoose')
 
 const { handleSchemaValidationErrors, trainingStatus } = require('../helpers')
@@ -35,7 +36,7 @@ const trainingSchema = new Schema(
       ref: 'book',
       required: [true, 'Book id is required'],
     },
-    reader: {
+    participator: {
       type: Schema.Types.ObjectId,
       ref: 'user',
       required: [true, 'Reader person is required'],
@@ -46,8 +47,13 @@ const trainingSchema = new Schema(
 
 trainingSchema.post('save', handleSchemaValidationErrors)
 
+const updateTrainingStatusSchema = Joi.object({
+  status: Joi.string().trim().valid(ACTIVE, FINISHED).required(),
+})
+
 const Training = model('training', trainingSchema)
 
 module.exports = {
   Training,
+  updateTrainingStatusSchema,
 }
