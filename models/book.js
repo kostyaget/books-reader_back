@@ -3,6 +3,8 @@ const Joi = require('joi')
 
 const { handleSchemaValidationErrors, bookStatus } = require('../helpers')
 
+const { NEXT, COMPLETED, IN_PROGRESS } = bookStatus
+
 const bookSchema = new Schema(
   {
     title: {
@@ -34,10 +36,10 @@ const bookSchema = new Schema(
       lowercase: true,
       trim: true,
       enum: {
-        values: [bookStatus.COMPLETED, bookStatus.IN_PROGRESS, bookStatus.NEXT],
+        values: [COMPLETED, IN_PROGRESS, NEXT],
         message: '{VALUE} is not supported',
       },
-      default: 'next',
+      default: NEXT,
     },
     rating: {
       type: Number,
@@ -82,10 +84,7 @@ const updateResumeSchema = Joi.object({
 }).or('rating', 'summary')
 
 const updateStatusSchema = Joi.object({
-  status: Joi.string()
-    .valid(bookStatus.COMPLETED, bookStatus.IN_PROGRESS, bookStatus.NEXT)
-    .trim()
-    .required(),
+  status: Joi.string().valid(COMPLETED, IN_PROGRESS, NEXT).trim().required(),
 })
 
 module.exports = {
