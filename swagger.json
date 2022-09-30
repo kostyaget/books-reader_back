@@ -33,6 +33,10 @@
         {
             "name": "Users",
             "description": "Reader endpoints"
+        },
+        {
+            "name": "Trainings",
+            "description": "Trainings endpoints"
         }
     ],
     "paths": {
@@ -215,18 +219,18 @@
                 }
             }
         },
-        "/api/books/:id/resume": {
+        "/api/books/{id}/resume": {
             "patch": {
                 "tags": [
                     "Books"
                 ],
                 "summary": "Update user book",
                 "parameters": [
-                       {
+                    {
                         "in": "path",
                         "name": "id",
                         "required": true,
-                        "type": "string"
+                       "type":"string"
                     }
                 ],
                 "security": [
@@ -319,19 +323,19 @@
                 }
             }
         },
-        " /api/users/:id/results": {
+        " /api/users/{id}/results": {
             "patch": {
                 "tags": [
                     "Users"
                 ],
-                "summary": "Training result",
+                "summary": "User id result",
                 "parameters": [
                     {
-                    "in":"path",
-                    "name":"id",
-                    "requred":true,
-                    "type":"string"
-                }
+                        "in": "path",
+                        "name": "id",
+                        "requred": true,
+                        "type": "string"
+                    }
                 ],
                 "security": [
                     {
@@ -344,7 +348,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/TrainingRequest"
+                                "$ref": "#/components/schemas/UserIdRequest"
                             }
                         }
                     }
@@ -355,13 +359,101 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TrainingResponse"
+                                    "$ref": "#/components/schemas/UserIdResponse"
                                 }
                             }
                         }
                     },
                     "400": {
                         "description": "Bad request (Incorrect ID format ,  invalid request body )",
+                        "content": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {}
+                    },
+                    "500": {
+                        "description": "jwt expired"
+                    }
+                }
+            }
+        },
+        "/api/trainings": {
+            "get": {
+                "tags": [
+                    "Trainings"
+                ],
+                "summary": "Trainings",
+                "parameters": [],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TrainingsResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {}
+                    },
+                    "500": {
+                        "description": "jwt expired"
+                    }
+                }
+            }
+        },
+        "/api/trainings/{id}/status": {
+            "patch": {
+                "tags": [
+                    "Trainings"
+                ],
+                "summary": "Training Status",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "requestBody": {
+                    "description": "Training object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TrainingStatusRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TrainingStatusResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request (Incorrect ID format , Status must be completed  , invalid request body )",
                         "content": {}
                     },
                     "401": {
@@ -698,7 +790,7 @@
                     }
                 }
             },
-            "TrainingRequest": {
+            "UserIdRequest": {
                 "type": "object",
                 "required": [
                     "trainingDate",
@@ -715,7 +807,7 @@
                     }
                 }
             },
-            "TrainingResponse": {
+            "UserIdResponse": {
                 "type": "object",
                 "properties": {
                     "_id": {
@@ -755,14 +847,114 @@
                         ]
                     }
                 }
+            },
+            "TrainingsResponse": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "_id": {
+                                    "type": "string",
+                                    "example": "6335ea8b4a979967e59fe986"
+                                },
+                                "pageAmoutn": {
+                                    "type": "Integer",
+                                    "example": 50
+                                },
+                                "status": {
+                                    "type": "string",
+                                    "example": "active"
+                                },
+                                "startDate": {
+                                    "type": "string",
+                                    "example": "2022-02-23"
+                                },
+                                "finishDate": {
+                                    "type": "string",
+                                    "example": "2022-02-23"
+                                },
+                                "book": {
+                                    "type": "object",
+                                    "properties": {
+                                        "_id": {
+                                            "type": "string",
+                                            "description": "Book Id",
+                                            "example": "6335ea8b4a979967e59fe986"
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "description": "Book title",
+                                            "example": "Title"
+                                        },
+                                        "author": {
+                                            "type": "string",
+                                            "description": "Book author",
+                                            "example": "Author"
+                                        },
+                                        "publishingDate": {
+                                            "type": "string",
+                                            "description": "Publication date of the book",
+                                            "example": "2022-02-23T00:00:00.000Z"
+                                        },
+                                        "pageAmount": {
+                                            "type": "Integer",
+                                            "description": "Page Amount",
+                                            "example": 455
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "description": "Status",
+                                            "example": "completed"
+                                        },
+                                        "rating": {
+                                            "type": "Integer",
+                                            "description": "Book status",
+                                            "example": 5
+                                        },
+                                        "summary": {
+                                            "type": "string",
+                                            "example": "good at"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "TrainingStatusRequest": {
+                "type": "object",
+                "required": [
+                    "status"
+                ],
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "example": "active"
+                    }
+                }
+            },
+             "TrainingStatusResponse": {
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "example": "active"
+                    }
+                
+                }
             }
         },
-        "securitySchemes": {
-            "Bearer": {
-                "type": "http",
-                "scheme": "bearer",
-                "bearerFormat": "JWT"
-            }
+     "securitySchemes": {
+        "Bearer": {
+            "type": "http",
+            "scheme": "bearer",
+            "bearerFormat": "JWT"
         }
+    }
+    
     }
 }
