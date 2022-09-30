@@ -81,8 +81,13 @@ const updateResumeSchema = Joi.object({
   summary: Joi.string().trim().min(1, 'utf-8').max(1000, 'utf-8'),
 }).or('rating', 'summary')
 
+const updateStatusSchema = Joi.object({
+  status: Joi.string(),
+})
+
 module.exports = {
   Book,
   updateResumeSchema,
+  updateStatusSchema,
   schemas,
 }

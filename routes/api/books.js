@@ -29,4 +29,12 @@ router.patch(
   ctrlWrapper(updateResume)
 )
 
+router.patch(
+  '/:id/status',
+  authenticateUser,
+  validateRequestId,
+  validateBody(),
+  ctrlWrapper()
+)
+
 module.exports = router
