@@ -23,7 +23,7 @@ const getActiveTrainings = async (req, res) => {
 
   if (!activeTrainings) throw RequestError(404)
 
-  res.json(activeTrainings)
+  res.json({ data: activeTrainings })
 }
 
 module.exports = { getActiveTrainings }
