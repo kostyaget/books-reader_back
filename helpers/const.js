@@ -5,7 +5,7 @@ module.exports = {
     COMPLETED: 'completed',
   },
   trainingStatus: {
-    active: 'active',
-    finished: 'finished',
+    ACTIVE: 'active',
+    FINISHED: 'finished',
   },
 }
