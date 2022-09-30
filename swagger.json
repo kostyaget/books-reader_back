@@ -15,10 +15,10 @@
     ],
     "servers": [
         {
-            "url": "http://localhost:3000"
+            "url": "http://localhost:4000"
         },
         {
-            "url": "https://dashboard.heroku.com/apps/books-reader-project/activity"
+            "url": "https://books-reader-project.herokuapp.com"
         }
     ],
     "tags": [
@@ -113,7 +113,7 @@
             }
         },
         "/api/auth/logout": {
-            "post": {
+            "get": {
                 "tags": [
                     "Auth"
                 ],
@@ -121,7 +121,7 @@
                 "parameters": [],
                 "security": [
                     {
-                        "bearerAuth": []
+                        "Bearer": []
                     }
                 ],
                 "responses": {
@@ -138,6 +138,224 @@
                     "401": {
                         "description": "Unauthorized (invalid token)",
                         "content": {}
+                    }
+                }
+            }
+        },
+        "/api/auth/google": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "User registration",
+                "parameters": [],
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GoogleResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/books/add": {
+            "post": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Add user book",
+                "parameters": [],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "requestBody": {
+                    "description": "Book object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BookAddRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BookAddResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request (invalid request body)",
+                        "content": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {}
+                    },
+                    "409": {
+                        "description": "Email already registered",
+                        "content": {}
+                    },
+                    "500": {
+                        "description": "jwt expired"
+                    }
+                }
+            }
+        },
+        "/api/books/:id/resume": {
+            "patch": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Update user book",
+                "parameters": [],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "requestBody": {
+                    "description": "Book object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateUserBookRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UpdateUserBookResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request (Incorrect ID format , Status must be completed  , invalid request body )",
+                        "content": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {}
+                    },
+                    "404": {
+                        "description": "(Book not found , Book does not belong to you)",
+                        "content": {}
+                    },
+                    "409": {
+                        "description": "Email already registered",
+                        "content": {}
+                    },
+                    "500": {
+                        "description": "jwt expired"
+                    }
+                }
+            }
+        },
+        "/api/users/current": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Current user",
+                "parameters": [],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CurrentUserResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {}
+                    },
+                    "409": {
+                        "description": "Email already registered",
+                        "content": {}
+                    },
+                    "500": {
+                        "description": "jwt expired"
+                    }
+                }
+            }
+        },
+        " /api/users/:id/results": {
+            "patch": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Training result",
+                "parameters": [],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "requestBody": {
+                    "description": "User object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TrainingRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TrainingResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request (Incorrect ID format ,  invalid request body )",
+                        "content": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {}
+                    },
+                    "500": {
+                        "description": "jwt expired"
                     }
                 }
             }
@@ -241,10 +459,288 @@
                     }
                 }
             },
-            
             "LogoutResponse": {
                 "type": "object",
                 "properties": {}
+            },
+            "GoogleResponse": {
+                "type": "object",
+                "properties": {
+                    "link": {
+                        "type": "string",
+                        "description": "User`s registration google",
+                        "example": "http://localhost:4000/googleAuth?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMzQ0ZjRjYTJjZDI2NjYyZmJkN2Y4YyIsImlhdCI6MTY2NDQ0NjE2NCwiZXhwIjoxNjY0NDc0OTY0fQ.EMeG56qD9ZUhOPlbzn0DOQa4JV8qvlg0MrR5SRtjxyo"
+                    }
+                }
+            },
+            "BookAddRequest": {
+                "type": "object",
+                "required": [
+                    "title",
+                    "author",
+                    "pageAmount",
+                    "publishingDate",
+                    "JWT"
+                ],
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Book title",
+                        "example": "Garri Potter"
+                    },
+                    "author": {
+                        "type": "string",
+                        "description": "Book author",
+                        "example": "Joanne Rowling"
+                    },
+                    "pageAmount": {
+                        "type": "Integer",
+                        "description": "Book page",
+                        "example": 345
+                    },
+                    "publishingDate": {
+                        "type": "Data",
+                        "description": "Publication date of the book",
+                        "example": "2022-09-26T13:22:40.148+00:00"
+                    }
+                }
+            },
+            "BookAddResponse": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Book title",
+                        "example": "Garri Potter"
+                    },
+                    "author": {
+                        "type": "string",
+                        "description": "Book author",
+                        "example": "Joanne Rowling"
+                    },
+                    "publishingDate": {
+                        "type": "string",
+                        "description": "Publication date of the book",
+                        "example": "2022-09-26T13:22:40.148+00:00"
+                    },
+                    "pageAmount": {
+                        "type": "Integer",
+                        "description": "Book page",
+                        "example": 345
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "Book status",
+                        "example": "complited"
+                    },
+                    "rating": {
+                        "type": "Integer",
+                        "description": "Book rating",
+                        "example": 10
+                    },
+                    "reader": {
+                        "type": "string",
+                        "description": "Book reader",
+                        "example": "User`s Id (6334be54b3ae5303571c9617)"
+                    },
+                    "_id": {
+                        "type": "string",
+                        "description": "Book Id",
+                        "example": "Book Id (6335ea8b4a979967e59fe986)"
+                    }
+                }
+            },
+            "UpdateUserBookRequest": {
+                "type": "object",
+                "required": [
+                    "rating",
+                    "summary"
+                ],
+                "properties": {
+                    "rating": {
+                        "type": "Integer",
+                        "description": "Book rating",
+                        "example": 10
+                    },
+                    "summary": {
+                        "type": "string",
+                        "description": "Book rating",
+                        "example": "good at"
+                    }
+                }
+            },
+            "UpdateUserBookResponse": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string",
+                        "description": "Book Id",
+                        "example": "Book Id (6335ea8b4a979967e59fe986)"
+                    },
+                    "rating": {
+                        "type": "Integer",
+                        "description": "Book rating",
+                        "example": 10
+                    },
+                    "summary": {
+                        "type": "string",
+                        "description": "Book rating",
+                        "example": "good at"
+                    }
+                }
+            },
+            "CurrentUserResponse": {
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "type": "object",
+                        "properties": {
+                            "info": {
+                                "type": "object",
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "description": "User`s name",
+                                        "example": "masky"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "description": "User`s email",
+                                        "format": "email"
+                                    },
+                                    "avatarUrl": {
+                                        "type": "string",
+                                        "description": "User`s avatar"
+                                    },
+                                    "firstVisit": {
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "progress": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "trainingDate": {
+                                                    "type": "string",
+                                                    "example": "2022-09-26T13:22:40.148+00:00"
+                                                },
+                                                "pagesAmount": {
+                                                    "type": "Integer",
+                                                    "example": 30
+                                                },
+                                                "_id": {
+                                                    "type": "string",
+                                                    "example": "4826ads873682742xa89a2"
+                                                }
+                                            }
+                                        },
+                                        "example": []
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "books": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "_id": {
+                                    "type": "string",
+                                    "example": "4826ads873682742xa89a2"
+                                },
+                                "title": {
+                                    "type": "string",
+                                    "example": "World of warcraft"
+                                },
+                                "author": {
+                                    "type": "string",
+                                    "example": "Author"
+                                },
+                                "publishingDate": {
+                                    "type": "string",
+                                    "example": "2022-09-26T13:22:40.148+00:00"
+                                },
+                                "pagesAmount": {
+                                    "type": "Integer",
+                                    "example": 30
+                                },
+                                "status": {
+                                    "type": "string",
+                                    "example": "next"
+                                },
+                                "rating": {
+                                    "type": "Integer",
+                                    "example": "0"
+                                },
+                                "summary": {
+                                    "type": "string",
+                                    "example": ""
+                                }
+                            }
+                        },
+                        "example": []
+                    }
+                }
+            },
+            "TrainingRequest": {
+                "type": "object",
+                "required": [
+                    "trainingDate",
+                    "pagesAmount"
+                ],
+                "properties": {
+                    "trainingDate": {
+                        "type": "string",
+                        "example": "2022-02-23"
+                    },
+                    "pagesAmount": {
+                        "type": "Integer",
+                        "example": 12
+                    }
+                }
+            },
+            "TrainingResponse": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string",
+                        "example": "6335ea8b4a979967e59fe986"
+                    },
+                    "progress": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "trainingDate": {
+                                    "type": "string",
+                                    "example": "2022-02-23T00:00:00.000Z"
+                                },
+                                "pagesAmount": {
+                                    "type": "Integer",
+                                    "example": 12
+                                },
+                                "_id": {
+                                    "type": "string",
+                                    "example": "6335ea8b4a979967e59fe986"
+                                }
+                            }
+                        },
+                        "example": [
+                            {
+                                "trainingDate": "2022-02-23T00:00:00.000Z",
+                                "pagesAmount": 30,
+                                "_id": "63342355569a53571814f37e"
+                            },
+                            {
+                                "trainingDate": "2022-03-23T00:00:00.000Z",
+                                "pagesAmount": 31,
+                                "_id": "633491002a9ae46e19e68888"
+                            }
+                        ]
+                    }
+                }
             }
         },
         "securitySchemes": {
