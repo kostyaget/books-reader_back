@@ -221,7 +221,14 @@
                     "Books"
                 ],
                 "summary": "Update user book",
-                "parameters": [],
+                "parameters": [
+                       {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "security": [
                     {
                         "Bearer": []
@@ -318,7 +325,14 @@
                     "Users"
                 ],
                 "summary": "Training result",
-                "parameters": [],
+                "parameters": [
+                    {
+                    "in":"path",
+                    "name":"id",
+                    "requred":true,
+                    "type":"string"
+                }
+                ],
                 "security": [
                     {
                         "Bearer": []
@@ -560,7 +574,7 @@
                     "rating": {
                         "type": "Integer",
                         "description": "Book rating",
-                        "example": 10
+                        "example": 5
                     },
                     "summary": {
                         "type": "string",
@@ -575,12 +589,12 @@
                     "_id": {
                         "type": "string",
                         "description": "Book Id",
-                        "example": "Book Id (6335ea8b4a979967e59fe986)"
+                        "example": "6335ea8b4a979967e59fe986"
                     },
                     "rating": {
                         "type": "Integer",
                         "description": "Book rating",
-                        "example": 10
+                        "example": 5
                     },
                     "summary": {
                         "type": "string",
