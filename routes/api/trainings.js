@@ -10,13 +10,21 @@ const {
   validateRequestId,
   validateBody,
 } = require('../../middlewares')
-const { updateTrainingStatusSchema,startTrainingSchema } = require('../../models')
+const {
+  updateTrainingStatusSchema,
+  startTrainingSchema,
+} = require('../../models')
 
 const router = express.Router()
 
 router.get('/', authenticateUser, ctrlWrapper(getActiveTrainings))
 
-router.post('/', authenticateUser, validateBody(startTrainingSchema),ctrlWrapper(startTraining));
+router.post(
+  '/start',
+  authenticateUser,
+  validateBody(startTrainingSchema),
+  ctrlWrapper(startTraining)
+)
 
 router.patch(
   '/:id/status',
