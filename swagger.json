@@ -1,5 +1,5 @@
 {
-    "openapi": "3.0.1",
+    "openapi": "3.0.2",
     "info": {
         "version": "1.0.0",
         "title": "Books-reader Api",
@@ -282,6 +282,68 @@
                 }
             }
         },
+        "/api/books/{id}/status": {
+            "patch": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Update  status reader book",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                       "type":"string"
+                    }
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "requestBody": {
+                    "description": "Book object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateTheReadingStatusOfTheBookRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UpdateTheReadingStatusOfTheBookResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request (Incorrect ID format , Status must be completed  , invalid request body )",
+                        "content": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {}
+                    },
+                    "403":{
+                        "description":"Forbidden"
+                    },
+                    "404": {
+                        "description": "(Book not found , Book does not belong to you)",
+                        "content": {}
+                    },
+                    "500": {
+                        "description": "jwt expired"
+                    }
+                }
+            }
+        },
         "/api/users/current": {
             "get": {
                 "tags": [
@@ -400,6 +462,54 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {}
+                    },
+                    "500": {
+                        "description": "jwt expired"
+                    }
+                }
+            }
+        },
+        "/api/trainings/start": {
+            "post": {
+                "tags": [
+                    "Trainings"
+                ],
+                "summary": "Start Trainings",
+                "parameters": [],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "requestBody": {
+                    "description": "Training object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/startTrainingRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/startTrainingResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"Book is not found",
+                        "content":{}
                     },
                     "401": {
                         "description": "Unauthorized",
@@ -695,6 +805,27 @@
                     }
                 }
             },
+            "UpdateTheReadingStatusOfTheBookRequest": {
+                "type": "object",
+                 "required": ["status"],
+                        "properties": {
+                            "status": {
+                                "type": "string",
+                                "description": "Update the reading status of the book",
+                                "example":"oneOf: inprogress , nex , completed"
+                            }
+                        }
+            },
+             "UpdateTheReadingStatusOfTheBookResponse": {
+                 "type": "object",
+                        "properties": {
+                            "status": {
+                                "type": "string",
+                                "description": "Update the reading status of the book",
+                                "example":" completed"
+                            }
+                        }
+            },
             "CurrentUserResponse": {
                 "type": "object",
                 "properties": {
@@ -944,6 +1075,66 @@
                         "type": "string",
                         "example": "active"
                     }
+                
+                }
+            },
+             "startTrainingRequest": {
+                "type": "object",
+                "required": [
+                    "startDate",
+                    "finishDate",
+                    "book"
+                ],
+                "properties": {
+                    "startDate": {
+                        "type": "string",
+                        "example": "03.01.01"
+                    },
+                    "finishDate":{
+                        "type":"string",
+                        "example":"03.03.03"
+                    },
+                    "book":{
+                        "type":"string",
+                        "example":"bdh232435h3489574fhsj"
+                    }
+                }
+            },
+              "startTrainingResponse": {
+                "type": "object",
+                "properties": {
+                      "_id":{
+                        "type":"string",
+                        "example":"6332b93e396b1b793d4f55ac"
+                    },
+                      "startDate": {
+                        "type": "string",
+                        "example": "2001-02-28T22:00:00.000Z"
+                    },
+                    "finishDate":{
+                        "type":"string",
+                        "example":"2003-03-02T22:00:00.000Z"
+                    },
+                    "status":{
+                        "type":"string",
+                        "example":"active"
+                    },
+                      "book":{
+                        "type":"string",
+                        "example":"bdh232435h3489574fhsj"
+                    },
+                      "participator":{
+                        "type":"string",
+                        "example":"6332b93e396b1b793d4f55ac"
+                    },
+                  "createdAt": {
+                    "type":"string",
+                    "example":"2022-09-30T18:23:19.245Z"
+                  },
+                "updatedAt":{
+                    "'type":"string",
+                    "example":"2022-09-30T18:23:19.245Z"
+                }
                 
                 }
             }
