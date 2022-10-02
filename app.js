@@ -13,6 +13,7 @@ const booksRouter = require('./routes/api/books')
 const authRouter = require('./routes/api/auth')
 
 const usersRouter = require('./routes/api/users')
+const trainingsRouter = require('./routes/api/trainings')
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short'
 
@@ -25,6 +26,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 app.use('/api/books', booksRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/users', usersRouter)
+app.use('/api/trainings', trainingsRouter)
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Not found' })
