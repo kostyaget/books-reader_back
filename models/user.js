@@ -56,7 +56,11 @@ const userSchema = new Schema(
       type: String,
       default: null,
     },
-    isVerify: {
+    // isVerify: {
+    //   type: Boolean,
+    //   default: false,
+    // },
+    verified: {
       type: Boolean,
       default: false,
     },
@@ -94,10 +98,15 @@ const addResultSchema = Joi.object({
   pagesAmount: Joi.number().integer().min(1).required(),
 })
 
+const emailVerificationSchema = Joi.object({
+  email: Joi.string().pattern(patterns.email).required(),
+})
+
 const User = model('user', userSchema)
 
 module.exports = {
   User,
   schemas,
   addResultSchema,
+  emailVerificationSchema,
 }
