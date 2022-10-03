@@ -10,4 +10,6 @@ module.exports = {
   RequestError,
   ctrlWrapper,
   ...require('./const'),
+  ...require('./sendEmail'),
+  ...require('./sendEmailAddressConfirmationEmail'),
 }

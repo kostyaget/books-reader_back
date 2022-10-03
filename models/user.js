@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose')
-// const bcrypt = require('bcrypt')
 const Joi = require('joi')
 const { randomUUID } = require('crypto')
 
@@ -26,8 +25,6 @@ const userSchema = new Schema(
       minLength: [6, 'Must be at least 6, got {VALUE}'],
       maxLength: [1000, 'Must be maximum 1000 symbols. You got {VALUE}'],
       trim: true,
-      // required: [true, 'Password is required'],
-      // если сделать пароль обезятельным - невозножно будет зайти через гугл
     },
     avatarUrl: {
       type: String,
@@ -56,7 +53,7 @@ const userSchema = new Schema(
       type: String,
       default: null,
     },
-    isVerify: {
+    verified: {
       type: Boolean,
       default: false,
     },
@@ -94,10 +91,15 @@ const addResultSchema = Joi.object({
   pagesAmount: Joi.number().integer().min(1).required(),
 })
 
+const emailVerificationSchema = Joi.object({
+  email: Joi.string().pattern(patterns.email).required(),
+})
+
 const User = model('user', userSchema)
 
 module.exports = {
   User,
   schemas,
   addResultSchema,
+  emailVerificationSchema,
 }
