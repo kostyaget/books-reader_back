@@ -10,7 +10,12 @@ const { validateBody } = require('../../middlewares')
 
 const { schemas, emailVerificationSchema } = require('../../models/user')
 
-const { logout, googleAuth, googleRedirect } = require('../../controllers/auth')
+const {
+  logout,
+  googleAuth,
+  googleRedirect,
+  remindUserPassword,
+} = require('../../controllers/auth')
 
 const { authenticateUser } = require('../../middlewares')
 const {
@@ -43,5 +48,11 @@ router
     validateBody(emailVerificationSchema),
     ctrlWrapper(emailConfirmation)
   )
+
+router.post(
+  '/forgotten',
+  validateBody(emailVerificationSchema),
+  ctrlWrapper(remindUserPassword)
+)
 
 module.exports = router
