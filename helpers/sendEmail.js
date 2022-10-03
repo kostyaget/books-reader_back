@@ -9,8 +9,8 @@ const sendEmail = async (emailOprions) => {
     await sgMailService.send({ ...emailOprions, from: SENDGRID_OWNER })
     return true
   } catch (error) {
-    throw new Error(error)
+    throw new Error(error.message)
   }
 }
 
-module.exports = sendEmail
+module.exports = { sendEmail }
