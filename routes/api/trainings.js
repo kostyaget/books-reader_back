@@ -1,4 +1,5 @@
 const express = require('express')
+const controller = require('../../controllers/trainings')
 const { ctrlWrapper } = require('../../helpers')
 const {
   getActiveTrainings,
@@ -34,4 +35,9 @@ router.patch(
   ctrlWrapper(updateTrainigStatus)
 )
 
+router.delete(
+  '/:trainingId',
+  authenticateUser,
+  ctrlWrapper(controller.deleteBookTraining)
+)
 module.exports = router
