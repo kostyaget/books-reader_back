@@ -6,10 +6,10 @@ const bcrypt = require('bcrypt')
 const remindUserPassword = async (req, res) => {
   const { email } = req.body
   const user = await User.findOne({ email })
-  console.log(user)
+
   if (!user) throw RequestError(404, `Cant find user with this email: ${email}`)
 
-  const newPassword = randomUUID().split('-')[0]
+  const [newPassword] = randomUUID().split('-')
   const hashedPassword = await bcrypt.hash(newPassword, 10)
   user.password = hashedPassword
   await user.save()
