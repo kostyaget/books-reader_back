@@ -19,6 +19,8 @@ const login = async (req, res) => {
     throw RequestError(401, 'Password incorrect')
   }
 
+  if (!user.verified) throw RequestError(400, 'Email not verified')
+
   const payload = {
     id: user._id,
   }
