@@ -12,4 +12,5 @@ module.exports = {
   ...require('./const'),
   ...require('./sendEmail'),
   ...require('./sendEmailAddressConfirmationEmail'),
+  ...require('./sendForgottenPasswordEmail'),
 }
