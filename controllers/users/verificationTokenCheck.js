@@ -8,7 +8,7 @@ const verificationTokenCheck = async (req, res, next) => {
     if (!user) throw RequestError(404, 'User not Found')
 
     await User.findByIdAndUpdate(user._id, {
-      verify: true,
+      verified: true,
       verificationToken: '',
     })
 
