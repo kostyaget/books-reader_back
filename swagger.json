@@ -682,7 +682,7 @@
             }
         },
         "/api/trainings/{trainingId}": {
-            "patch": {
+            "delete": {
                 "tags": [
                     "Trainings"
                 ],
