@@ -1,7 +1,7 @@
 const { User } = require('../../models')
 const { RequestError } = require('../../helpers')
 
-const verificationTokenCheck = async (req, res, next) => {
+const verificationTokenCheck = async (req, res) => {
   const { token: verificationToken } = req.params
   const user = await User.findOne({ verificationToken })
   if (!user) throw RequestError(404, 'User not Found')
@@ -11,9 +11,9 @@ const verificationTokenCheck = async (req, res, next) => {
     verificationToken: '',
   })
 
-  res.status(200).json({
-    message: 'Verification successful',
-  })
+  const { FRONTEND_URL } = process.env
+
+  res.redirect(`${FRONTEND_URL}/login`)
 }
 
 module.exports = { verificationTokenCheck }
