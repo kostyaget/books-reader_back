@@ -1,21 +1,17 @@
-const { User, emailVerificationSchema } = require('../../models')
-const { requestError, sendMail } = require('../../helpers')
-const { BACKEND_URL } = process.env
+const { User } = require('../../models')
+const {
+  RequestError,
+  sendEmailAddressConfirmationEmail,
+} = require('../../helpers')
 
 const emailConfirmation = async (req, res, next) => {
-  const { error } = emailVerificationSchema.validate(req.body)
-  if (error) throw requestError(400, 'Missing required field email')
-
   const { email } = req.body
   const user = await User.findOne({ email })
-  if (user.verify)
-    throw requestError(400, 'Verification has already been passed')
 
-  await sendMail({
-    to: email,
-    subject: 'Email confirmation',
-    html: `a targer='_blank' href='${BACKEND_URL}/api/auth/verify/${user.verificationToken}'>Click to confim email</a>`,
-  })
+  if (user.verified)
+    throw RequestError(400, 'Verification has already been passed')
+
+  await sendEmailAddressConfirmationEmail(email, user.verificationToken)
 
   res.status(200).json({ message: 'Verification email was sent' })
 }

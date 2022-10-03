@@ -8,7 +8,7 @@ const { ctrlWrapper } = require('../../helpers')
 
 const { validateBody } = require('../../middlewares')
 
-const { schemas } = require('../../models/user')
+const { schemas, emailVerificationSchema } = require('../../models/user')
 
 const { logout, googleAuth, googleRedirect } = require('../../controllers/auth')
 
@@ -38,6 +38,10 @@ router.get('/google-redirect', ctrlWrapper(googleRedirect))
 
 router
   .get('/verify/:token', ctrlWrapper(verificationTokenCheck))
-  .post('/verify', ctrlWrapper(emailConfirmation))
+  .post(
+    '/verify',
+    validateBody(emailVerificationSchema),
+    ctrlWrapper(emailConfirmation)
+  )
 
 module.exports = router
