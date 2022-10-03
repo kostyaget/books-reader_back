@@ -37,7 +37,7 @@ router.get('/google', ctrlWrapper(googleAuth))
 router.get('/google-redirect', ctrlWrapper(googleRedirect))
 
 router
-  .get('/verify/:token', verificationTokenCheck)
-  .post('/verify', emailConfirmation)
+  .get('/verify/:token', ctrlWrapper(verificationTokenCheck))
+  .post('/verify', ctrlWrapper(emailConfirmation))
 
 module.exports = router
