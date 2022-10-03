@@ -20,4 +20,4 @@ const verificationTokenCheck = async (req, res, next) => {
   }
 }
 
-module.exports = verificationTokenCheck
+module.exports = { verificationTokenCheck }

@@ -24,4 +24,4 @@ const emailConfirmation = async (req, res, next) => {
   }
 }
 
-module.exports = emailConfirmation
+module.exports = { emailConfirmation }
