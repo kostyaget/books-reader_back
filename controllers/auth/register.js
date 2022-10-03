@@ -1,5 +1,8 @@
 const bcrypt = require('bcrypt')
-const { RequestError } = require('../../helpers')
+const {
+  RequestError,
+  sendEmailAddressConfirmationEmail,
+} = require('../../helpers')
 
 const { User } = require('../../models/user')
 
@@ -16,6 +19,9 @@ const register = async (req, res, next) => {
     password: hashPassword,
     repeat_Password: hashPassword,
   })
+
+  const { verificationToken } = result
+  await sendEmailAddressConfirmationEmail(email, verificationToken)
 
   res.status(201).json({
     user: {

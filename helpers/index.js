@@ -11,4 +11,5 @@ module.exports = {
   ctrlWrapper,
   ...require('./const'),
   ...require('./sendEmail'),
+  ...require('./sendEmailAddressConfirmationEmail'),
 }
