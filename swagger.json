@@ -254,12 +254,6 @@
                 ],
                 "summary": "User redirect frontEnd",
                   "parameters": [
-                    {
-                        "in": "path",
-                        "name": "token",
-                        "required": true,
-                        "type": "string"
-                    }
                 ],
                 "responses": {
                     "302": {
