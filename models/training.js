@@ -52,10 +52,10 @@ const updateTrainingStatusSchema = Joi.object({
 })
 
 const startTrainingSchema = Joi.object({
-    startDate: Joi.string().required(),
-    finishDate: Joi.string().required(),
-    book: Joi.array().required(),
-});
+  startDate: Joi.string().required(),
+  finishDate: Joi.string().required(),
+  book: Joi.string().required(),
+})
 
 const Training = model('training', trainingSchema)
 
