@@ -15,10 +15,10 @@
     ],
     "servers": [
         {
-            "url": "http://localhost:4000"
+            "url": "https://books-reader-project.herokuapp.com"
         },
         {
-            "url": "https://books-reader-project.herokuapp.com"
+            "url": "http://localhost:4000"
         }
     ],
     "tags": [
@@ -196,9 +196,9 @@
                             }
                         }
                     },
-                    "400":{
-                        "description":"Verification has already been passed",
-                        "content":{}
+                    "400": {
+                        "description": "Verification has already been passed",
+                        "content": {}
                     },
                     "401": {
                         "description": "Email not found ",
@@ -240,9 +240,9 @@
                         "description": "Email not found ",
                         "content": {}
                     },
-                    "404":{
-                        "description":"Cant find user with this email",
-                        "content":{}
+                    "404": {
+                        "description": "Cant find user with this email",
+                        "content": {}
                     }
                 }
             }
@@ -253,8 +253,7 @@
                     "Auth"
                 ],
                 "summary": "User redirect frontEnd",
-                  "parameters": [
-                ],
+                "parameters": [],
                 "responses": {
                     "302": {
                         "description": "Redirect fronEnd",
@@ -839,7 +838,7 @@
                     }
                 }
             },
-             "VerificationEmailRequest": {
+            "VerificationEmailRequest": {
                 "type": "object",
                 "required": [
                     "email"
@@ -849,7 +848,7 @@
                         "type": "string",
                         "description": "User`s email",
                         "format": "email"
-                    }  
+                    }
                 }
             },
             "VerificationEmailResponse": {
@@ -861,7 +860,7 @@
                     }
                 }
             },
-              "PasswordRecoveryRequest": {
+            "PasswordRecoveryRequest": {
                 "type": "object",
                 "required": [
                     "email"
@@ -871,7 +870,7 @@
                         "type": "string",
                         "description": "User`s email",
                         "format": "email"
-                    }  
+                    }
                 }
             },
             "PasswordRecoveryResponse": {
@@ -883,16 +882,15 @@
                     }
                 }
             },
-              "RedirectFrontEndResponse": {
+            "RedirectFrontEndResponse": {
                 "type": "object",
                 "properties": {
                     "redirect": {
                         "type": "string",
                         "example": "Redirect frontEnd"
-                    }       
+                    }
                 }
             },
-          
             "BookAddRequest": {
                 "type": "object",
                 "required": [
