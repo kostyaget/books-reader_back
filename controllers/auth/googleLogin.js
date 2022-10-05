@@ -62,8 +62,8 @@ exports.googleRedirect = async (req, res) => {
     await createUser({
       email: userEmail,
       username: userName,
-      isVerify: true,
-      verificationToken: 'null',
+      verified: true,
+      verificationToken: "",
     })
   }
 
