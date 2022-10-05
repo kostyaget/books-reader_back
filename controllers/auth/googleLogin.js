@@ -63,7 +63,7 @@ exports.googleRedirect = async (req, res) => {
       email: userEmail,
       username: userName,
       verified: true,
-      verificationToken: 'null',
+      verificationToken: "",
     })
   }
 
