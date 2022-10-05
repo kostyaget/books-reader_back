@@ -26,32 +26,13 @@ const startTraining = async (req, res) => {
   const newTraining = await Training.create({
     ...req.body,
     participator: userId,
-  }).populate('book')
+  })
 
-  console.log(newTraining)
+  if (!newTraining) throw RequestError(500, 'Something went wrong')
+
+  userBook.status = IN_PROGRESS
+  await userBook.save()
 
   res.status(201).json(newTraining)
 }
 module.exports = startTraining
-
-//   const { id } = findUserTraining
-//   const { startDate, finishDate, book } = newTraining
-//   const result = await Training.findByIdAndUpdate(
-//     id,
-//     { startDate, finishDate, book },
-//     { new: true }
-//   )
-//   await Book.updateMany(
-//     { _id: { $in: result.book } },
-//     { status: IN_PROGRESS },
-//     { multi: true }
-//   )
-//   res.status(201).json(result)
-// } else {
-//   const result = await Training.create(newTraining)
-//   await Book.updateMany(
-//     { _id: { $in: result.books } },
-//     { status: IN_PROGRESS },
-//     { multi: true }
-//   )
-//  res.status(201).json(result)
