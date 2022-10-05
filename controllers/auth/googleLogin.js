@@ -77,5 +77,7 @@ exports.googleRedirect = async (req, res) => {
     await User.findOneAndUpdate({ _id: currentUser.id }, { token })
   }
 
-  return res.redirect(`${process.env.FRONTEND_URL}/googleAuth?token=${token}`)
+  return res.redirect(
+    `${process.env.FRONTEND_URL}/googleAuth?token=${token}&name=${userName}&email=${userEmail}`
+  )
 }
