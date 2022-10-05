@@ -1016,7 +1016,7 @@
                     "status": {
                         "type": "string",
                         "description": "Update the reading status of the book",
-                        "example": "oneOf: inprogress , nex , completed"
+                        "example": "oneOf: inprogress , next , completed"
                     }
                 }
             },
