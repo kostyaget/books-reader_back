@@ -8,7 +8,7 @@ const resetUserProgress = async (req, res) => {
   if (userId !== authenticatedUserId.toString()) throw RequestError(403)
 
   if (Array.isArray(progress) && progress?.length === 0)
-    throw RequestError(400, 'Progress is already empty')
+    throw RequestError(400, 'Progress is already set to empty')
 
   const resetedUserProgress = await User.findByIdAndUpdate(
     userId,
@@ -21,7 +21,7 @@ const resetUserProgress = async (req, res) => {
     }
   )
 
-  res.json({ message: 'User progress was reseted to empty result' })
+  res.json({ message: 'User progress was reset to empty result' })
 }
 
 module.exports = { resetUserProgress }
