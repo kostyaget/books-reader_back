@@ -28,11 +28,6 @@ const startTraining = async (req, res) => {
     participator: userId,
   })
 
-  if (!newTraining) throw RequestError(500, 'Something went wrong')
-
-  userBook.status = IN_PROGRESS
-  await userBook.save()
-
   res.status(201).json(newTraining)
 }
 module.exports = startTraining
