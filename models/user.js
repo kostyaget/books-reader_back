@@ -16,6 +16,7 @@ const userSchema = new Schema(
     email: {
       type: String,
       match: patterns.email,
+      lowercase: true,
       minLength: [6, 'Must be at least 6, got {VALUE}'],
       maxLength: [63, 'Must be maximum 63 symbols. You got {VALUE}'],
       trim: true,
