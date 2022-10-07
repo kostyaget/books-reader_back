@@ -6,7 +6,11 @@ const {
   authenticateUser,
   validateRequestId,
 } = require('../../middlewares')
-const { addResults, getCurrentUserInfo } = require('../../controllers/users')
+const {
+  addResults,
+  getCurrentUserInfo,
+  resetUserProgress,
+} = require('../../controllers/users')
 const { addResultSchema } = require('../../models')
 
 const router = express.Router()
@@ -19,6 +23,13 @@ router.patch(
   validateRequestId,
   validateBody(addResultSchema),
   ctrlWrapper(addResults)
+)
+
+router.delete(
+  '/:id/progress',
+  authenticateUser,
+  validateRequestId,
+  ctrlWrapper(resetUserProgress)
 )
 
 module.exports = router
