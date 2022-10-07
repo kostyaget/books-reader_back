@@ -9,16 +9,19 @@ const userSchema = new Schema(
     username: {
       type: String,
       minLength: [3, 'Must be at least 3, got {VALUE}'],
-      maxLength: [30, 'Must be maximum 30 symbols. You got {VALUE}'],
+      maxLength: [100, 'Must be maximum 100 symbols. You got {VALUE}'],
       trim: true,
       required: [true, 'Username is required'],
     },
     email: {
       type: String,
-      required: [true, 'Email is required'],
+      lowercase: true,
       match: patterns.email,
+      minLength: [6, 'Must be at least 6, got {VALUE}'],
+      maxLength: [63, 'Must be maximum 63 symbols. You got {VALUE}'],
       trim: true,
       unique: true,
+      required: [true, 'Email is required'],
     },
     password: {
       type: String,

@@ -3,4 +3,5 @@ module.exports = {
   ...require('./getCurrentUserInfo'),
   ...require('./verificationTokenCheck'),
   ...require('./emailConfirmation'),
+  ...require('./resetUserProgress'),
 }
