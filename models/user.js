@@ -103,7 +103,7 @@ const emailVerificationSchema = Joi.object({
   email: Joi.string().pattern(patterns.email).required(),
 })
 
-const updateTrainingVerificationSchema = Joi.object({
+const updateTrainingStateVerificationSchema = Joi.object({
   isTraining: Joi.boolean().required(),
 })
 
@@ -114,5 +114,5 @@ module.exports = {
   schemas,
   addResultSchema,
   emailVerificationSchema,
-  updateTrainingVerificationSchema,
+  updateTrainingStateVerificationSchema,
 }
