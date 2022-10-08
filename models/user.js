@@ -3,6 +3,7 @@ const Joi = require('joi')
 const { randomUUID } = require('crypto')
 
 const { handleSchemaValidationErrors, patterns } = require('../helpers')
+const { boolean } = require('joi')
 
 const userSchema = new Schema(
   {
@@ -37,6 +38,10 @@ const userSchema = new Schema(
     firstVisit: {
       type: Boolean,
       default: true,
+    },
+    isTraining: {
+      type: Boolean,
+      default: false,
     },
     progress: [
       {
@@ -98,6 +103,10 @@ const emailVerificationSchema = Joi.object({
   email: Joi.string().pattern(patterns.email).required(),
 })
 
+const updateTrainingStateVerificationSchema = Joi.object({
+  isTraining: Joi.boolean().required(),
+})
+
 const User = model('user', userSchema)
 
 module.exports = {
@@ -105,4 +114,5 @@ module.exports = {
   schemas,
   addResultSchema,
   emailVerificationSchema,
+  updateTrainingStateVerificationSchema,
 }

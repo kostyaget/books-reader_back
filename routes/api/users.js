@@ -10,8 +10,12 @@ const {
   addResults,
   getCurrentUserInfo,
   resetUserProgress,
+  updateTrainingState,
 } = require('../../controllers/users')
-const { addResultSchema } = require('../../models')
+const {
+  addResultSchema,
+  updateTrainingStateVerificationSchema,
+} = require('../../models')
 
 const router = express.Router()
 
@@ -30,6 +34,14 @@ router.delete(
   authenticateUser,
   validateRequestId,
   ctrlWrapper(resetUserProgress)
+)
+
+router.patch(
+  '/:id/training',
+  authenticateUser,
+  validateRequestId,
+  validateBody(updateTrainingStateVerificationSchema),
+  ctrlWrapper(updateTrainingState)
 )
 
 module.exports = router
