@@ -1,7 +1,6 @@
 const { User, Book } = require('../../models')
 
 const userInfoFields = {
-  _id: 0,
   token: 0,
   createdAt: 0,
   updatedAt: 0,
