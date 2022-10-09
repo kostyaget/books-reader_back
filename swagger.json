@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.2",
     "info": {
-        "version": "1.0.0",
+        "version": "1.1.0",
         "title": "Books-reader Api",
         "description": "API for the Books-reader application, allows you to add books to your own library, displays statistics: time, amount of material read"
     },
@@ -545,6 +545,105 @@
                 }
             }
         },
+        " /api/users/{id}/training": {
+            "patch": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "User id trining",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "requred": true,
+                        "type": "string"
+                    }
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "requestBody": {
+                    "description": "User object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserUpdateTrainingIdRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserUpdateTrainingResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request (Incorrect ID format ,  invalid request body )",
+                        "content": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {}
+                    },
+                    "500": {
+                        "description": "jwt expired"
+                    }
+                }
+            }
+        },
+        " /api/users/{id}/progress": {
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "User id trining",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "requred": true,
+                        "type": "string"
+                    }
+                ],
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User progress was reset to empty result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResetUserProgressIdResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request (Progress is already set to empty )",
+                        "content": {}
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {}
+                    },
+                    "500": {
+                        "description": "jwt expired"
+                    }
+                }
+            }
+        },
         "/api/trainings/start": {
             "post": {
                 "tags": [
@@ -1057,6 +1156,10 @@
                                         "type": "boolean",
                                         "example": true
                                     },
+                                    "isTraining":{
+                                        "type":"boolean",
+                                        "example":"true"
+                                    },
                                     "progress": {
                                         "type": "array",
                                         "items": {
@@ -1181,6 +1284,37 @@
                             }
                         ]
                     }
+                }
+            },
+             "UserUpdateTrainingIdRequest": {
+                "type": "object",
+                "required": [
+                    "isTraining"
+                ],
+                "properties":{
+                     "isTraining": {
+                        "type": "boolean",
+                        "example": "true"
+                }
+                }
+               
+            },
+            "UserUpdateTrainingResponse": {
+                "type": "object",
+                "properties": {
+                     "isTraining": {
+                        "type": "boolean",
+                        "example": "true"
+                }
+                }
+            },
+            "ResetUserProgressIdResponse": {
+                "type": "object",
+                "properties": {
+                     "message": {
+                        "type": "string",
+                        "example": "User progress was reset to empty result"
+                }
                 }
             },
             "StartTrainingRequest": {
