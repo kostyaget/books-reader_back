@@ -1148,6 +1148,11 @@
                                         "description": "User`s email",
                                         "format": "email"
                                     },
+                                     "_id": {
+                                        "type": "string",
+                                        "description": "User`s id",
+                                        "example":"4jk45u8r3ir4557ytr"
+                                    },
                                     "avatarUrl": {
                                         "type": "string",
                                         "description": "User`s avatar"
